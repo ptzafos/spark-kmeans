@@ -29,7 +29,7 @@ from pyspark import SparkContext
 # $example on$
 from pyspark.mllib.clustering import KMeans, KMeansModel
 from matplotlib import pyplot
-import random
+import time
 # $example off$
 
 if __name__ == "__main__":
@@ -37,12 +37,12 @@ if __name__ == "__main__":
 
     # # $example on$
     # # Load and parse the data
+    start_time = time.time()
     data = sc.textFile("pointdata2018.txt")
-    clusters = KMeansModel.load(sc, "KmeansResults")
     parsedData = data.map(lambda line: array([float(x) for x in line.split(',')]))
 
     # # Build the model (cluster the data)
-    clusters = KMeans.train(parsedData, 4, maxIterations=10, initializationMode="random", seed=int(datetime.timestamp(datetime.now())))
+    clusters = KMeans.train(parsedData, 4, maxIterations=10, initializationMode="random", seed=int(time.time()))
 
 
     ## Evaluate clustering by computing Within Set Sum of Squared Errors
@@ -50,21 +50,18 @@ if __name__ == "__main__":
         center = clusters.centers[clusters.predict(point)]
         return sqrt(sum([x**2 for x in (point - center)]))
 
-    def custom_kmeans(dataset, centroid_number, iterations):
-        centroids = ([for i in range(0,centroid_number)])
-        # random.seed(int(datetime.timestamp(datetime.now())))
-        # centroids = random.randint(0,sys.maxsize)
+    WSSSE = parsedData.map(lambda point: error(point)).reduce(lambda x, y: x + y)
+    print("MLlib = " + str(WSSSE))
 
-    # WSSSE = parsedData.map(lambda point: error(point)).reduce(lambda x, y: x + y)
-    WSSSE_spark = clusters.computeCost(parsedData)
-    # print("Within Set Sum of Squared Error = " + str(WSSSE))1
-    print("Within Set Sum of Squared Error builtin spark = " + str(WSSSE_spark))
-
-    # # Save and load model
-    # clusters.save(sc, "KmeansResults")
+# # Save and load model
+    elapsed_time = time.time() - start_time
+    with open("mllib.txt", "a") as mllib_file:
+        mllib_file.write(str(WSSSE))
+        mllib_file.write(str(elapsed_time))
+    # clusters.save(sc, "kmeans_mllib_model")
     # sameModel = KMeansModel.load(sc, "KmeansResults")
     # $example off$
+    sc.stop()
 
     
-    sc.stop()
     

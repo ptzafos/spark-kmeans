@@ -40,9 +40,7 @@ def closestPoint(p, centers):
     bestIndex = 0
     closest = float("+inf")
     for i in range(len(centers)):
-        tempDist = np.sum((p - centers[i]).map(lambda val: abs(val)))
-        #Manhattan distance
-#         tempDist = np.sum((p - centers[i]))
+        tempDist = np.sum((p - centers[i]) ** 2)
         if tempDist < closest:
             closest = tempDist
             bestIndex = i
@@ -60,25 +58,30 @@ if __name__ == "__main__":
     .appName("PythonKMeans")\
     .getOrCreate()
 
-    # lines = spark.read.text('gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/pointdata2018.txt').rdd.map(lambda r: r[0])
+    start_time = time.time()
     lines = spark.read.text('pointdata2018.txt').rdd.map(lambda r: r[0])
-    # lines.takeSample(True, 100000, seed=int(datetime.timestamp(datetime.now())))
 
     data = lines.map(parseVector).cache()
     convergeDist = 0.0001
     tempDist = 1.0
     K = 4
     kPoints = data.takeSample(False, K, int(time.time()))
+
     while tempDist > convergeDist:
         closest = data.map(lambda p: (closestPoint(p, kPoints), (p, 1)))
         pointStats = closest.reduceByKey(lambda p1_c1, p2_c2:
                                         (p1_c1[0] + p2_c2[0], p1_c1[1] + p2_c2[1]))
         newPoints = pointStats.map(lambda st: (st[0], st[1][0] / st[1][1])).collect()
         tempDist = sum(np.sum((kPoints[iK] - p) ** 2) for (iK, p) in newPoints)
-        ##updates new points coordinates
+
         for (iK, p) in newPoints:
             kPoints[iK] = p
+
     WSSSE = data.map(lambda point: compute_error(point, kPoints)).reduce(lambda x, y: x + y)
-    print("WSSE = ", WSSSE)
+    print("Euclidean WSSE = ", WSSSE)
+    elapsed_time = time.time() - start_time
+    with open("euclidean.txt", "a") as euclidean:
+        euclidean.write(str(WSSSE))
+        euclidean.write(str(elapsed_time))
     print("Final centers: " + str(kPoints))
     spark.stop()

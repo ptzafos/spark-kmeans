@@ -19,7 +19,6 @@
 The K-means algorithm written from scratch against PySpark. In practice,
 one may prefer to use the KMeans algorithm in ML, as shown in
 examples/src/main/python/ml/kmeans_example.py.
-
 This example requires NumPy (http://www.numpy.org/).
 """
 from __future__ import print_function
@@ -27,8 +26,6 @@ from __future__ import print_function
 import sys
 
 import numpy as np
-from datetime import datetime
-import matplotlib.pyplot as plt
 from pyspark.sql import SparkSession
 
 
@@ -41,50 +38,48 @@ def closestPoint(p, centers):
     closest = float("+inf")
     for i in range(len(centers)):
         tempDist = np.sum((p - centers[i]) ** 2)
-        #Manhattan distance
-#         tempDist = np.sum((p - centers[i]))
         if tempDist < closest:
             closest = tempDist
             bestIndex = i
     return bestIndex
 
-def compute_error(p, centers):
-    center = centers[closestPoint(p,centers)]
-    return np.sqrt(sum([x**2 for x in (p - center)]))
-
 
 if __name__ == "__main__":
 
+    if len(sys.argv) != 4:
+        print("Usage: kmeans <file> <k> <convergeDist>", file=sys.stderr)
+        sys.exit(-1)
+
+    print("""WARN: This is a naive implementation of KMeans Clustering and is given
+       as an example! Please refer to examples/src/main/python/ml/kmeans_example.py for an
+       example on how to use ML's KMeans implementation.""", file=sys.stderr)
+
     spark = SparkSession\
-    .builder\
-    .appName("PythonKMeans")\
-    .getOrCreate()
+        .builder\
+        .appName("PythonKMeans")\
+        .getOrCreate()
 
-    # lines = spark.read.text('gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/pointdata2018.txt').rdd.map(lambda r: r[0])
-    lines = spark.read.text('pointdata2018.txt').rdd.map(lambda r: r[0])
-    # lines.takeSample(True, 100000, seed=int(datetime.timestamp(datetime.now())))
-
+    lines = spark.read.text(sys.argv[1]).rdd.map(lambda r: r[0])
     data = lines.map(parseVector).cache()
-    convergeDist = 0.0001
+    K = int(sys.argv[2])
+    convergeDist = float(sys.argv[3])
+
+    kPoints = data.takeSample(False, K, 1)
     tempDist = 1.0
-    i = 0
-    sse_list = list()
-    for K in range(2,10):
-        kPoints = data.takeSample(False, K, 5)
-        while tempDist > convergeDist:
-            closest = data.map(lambda p: (closestPoint(p, kPoints), (p, 1)))
-            pointStats = closest.reduceByKey(lambda p1_c1, p2_c2:
-                                            (p1_c1[0] + p2_c2[0], p1_c1[1] + p2_c2[1]))
-            newPoints = pointStats.map(lambda st: (st[0], st[1][0] / st[1][1])).collect()
-            tempDist = sum(np.sum((kPoints[iK] - p) ** 2) for (iK, p) in newPoints)
-            ##updates new points coordinates
-            for (iK, p) in newPoints:
-                kPoints[iK] = p
-        WSSSE = data.map(lambda point: compute_error(point, kPoints)).reduce(lambda x, y: x + y)
-        sse_list.append(WSSSE)
-        print(K, "- WSSE = ", WSSSE)
+
+    while tempDist > convergeDist:
+        closest = data.map(
+            lambda p: (closestPoint(p, kPoints), (p, 1)))
+        pointStats = closest.reduceByKey(
+            lambda p1_c1, p2_c2: (p1_c1[0] + p2_c2[0], p1_c1[1] + p2_c2[1]))
+        newPoints = pointStats.map(
+            lambda st: (st[0], st[1][0] / st[1][1])).collect()
+
+        tempDist = sum(np.sum((kPoints[iK] - p) ** 2) for (iK, p) in newPoints)
+
+        for (iK, p) in newPoints:
+            kPoints[iK] = p
+
     print("Final centers: " + str(kPoints))
-    sse_vector = np.array(sse_list)
-    plt.plot(sse_vector)
-    plt.show()
+
     spark.stop()

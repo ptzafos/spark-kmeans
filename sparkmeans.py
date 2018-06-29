@@ -19,6 +19,8 @@ from __future__ import print_function
 
 # $example on$
 from numpy import array
+import numpy as np
+import sys
 from math import sqrt
 from datetime import datetime
 # $example off$
@@ -26,6 +28,8 @@ from datetime import datetime
 from pyspark import SparkContext
 # $example on$
 from pyspark.mllib.clustering import KMeans, KMeansModel
+from matplotlib import pyplot
+import random
 # $example off$
 
 if __name__ == "__main__":
@@ -33,7 +37,8 @@ if __name__ == "__main__":
 
     # # $example on$
     # # Load and parse the data
-    data = sc.textFile("smallpointdata2018.txt")
+    data = sc.textFile("pointdata2018.txt")
+    clusters = KMeansModel.load(sc, "KmeansResults")
     parsedData = data.map(lambda line: array([float(x) for x in line.split(',')]))
 
     # # Build the model (cluster the data)
@@ -45,9 +50,14 @@ if __name__ == "__main__":
         center = clusters.centers[clusters.predict(point)]
         return sqrt(sum([x**2 for x in (point - center)]))
 
-    WSSSE = parsedData.map(lambda point: error(point)).reduce(lambda x, y: x + y)
+    def custom_kmeans(dataset, centroid_number, iterations):
+        centroids = ([for i in range(0,centroid_number)])
+        # random.seed(int(datetime.timestamp(datetime.now())))
+        # centroids = random.randint(0,sys.maxsize)
+
+    # WSSSE = parsedData.map(lambda point: error(point)).reduce(lambda x, y: x + y)
     WSSSE_spark = clusters.computeCost(parsedData)
-    print("Within Set Sum of Squared Error = " + str(WSSSE))
+    # print("Within Set Sum of Squared Error = " + str(WSSSE))1
     print("Within Set Sum of Squared Error builtin spark = " + str(WSSSE_spark))
 
     # # Save and load model
@@ -55,5 +65,6 @@ if __name__ == "__main__":
     # sameModel = KMeansModel.load(sc, "KmeansResults")
     # $example off$
 
+    
     sc.stop()
     

@@ -27,9 +27,9 @@ from __future__ import print_function
 import sys
 
 import numpy as np
-from datetime import datetime
 import matplotlib.pyplot as plt
 from pyspark.sql import SparkSession
+import time
 
 
 def parseVector(line):
@@ -40,7 +40,7 @@ def closestPoint(p, centers):
     bestIndex = 0
     closest = float("+inf")
     for i in range(len(centers)):
-        tempDist = np.sum((p - centers[i]) ** 2)
+        tempDist = np.sum((p - centers[i]).map(lambda val: abs(val)))
         #Manhattan distance
 #         tempDist = np.sum((p - centers[i]))
         if tempDist < closest:
@@ -67,24 +67,18 @@ if __name__ == "__main__":
     data = lines.map(parseVector).cache()
     convergeDist = 0.0001
     tempDist = 1.0
-    i = 0
-    sse_list = list()
-    for K in range(2,10):
-        kPoints = data.takeSample(False, K, 5)
-        while tempDist > convergeDist:
-            closest = data.map(lambda p: (closestPoint(p, kPoints), (p, 1)))
-            pointStats = closest.reduceByKey(lambda p1_c1, p2_c2:
-                                            (p1_c1[0] + p2_c2[0], p1_c1[1] + p2_c2[1]))
-            newPoints = pointStats.map(lambda st: (st[0], st[1][0] / st[1][1])).collect()
-            tempDist = sum(np.sum((kPoints[iK] - p) ** 2) for (iK, p) in newPoints)
-            ##updates new points coordinates
-            for (iK, p) in newPoints:
-                kPoints[iK] = p
-        WSSSE = data.map(lambda point: compute_error(point, kPoints)).reduce(lambda x, y: x + y)
-        sse_list.append(WSSSE)
-        print(K, "- WSSE = ", WSSSE)
+    K = 4
+    kPoints = data.takeSample(False, K, int(time.time()))
+    while tempDist > convergeDist:
+        closest = data.map(lambda p: (closestPoint(p, kPoints), (p, 1)))
+        pointStats = closest.reduceByKey(lambda p1_c1, p2_c2:
+                                        (p1_c1[0] + p2_c2[0], p1_c1[1] + p2_c2[1]))
+        newPoints = pointStats.map(lambda st: (st[0], st[1][0] / st[1][1])).collect()
+        tempDist = sum(np.sum((kPoints[iK] - p) ** 2) for (iK, p) in newPoints)
+        ##updates new points coordinates
+        for (iK, p) in newPoints:
+            kPoints[iK] = p
+    WSSSE = data.map(lambda point: compute_error(point, kPoints)).reduce(lambda x, y: x + y)
+    print("WSSE = ", WSSSE)
     print("Final centers: " + str(kPoints))
-    sse_vector = np.array(sse_list)
-    plt.plot(sse_vector)
-    plt.show()
     spark.stop()

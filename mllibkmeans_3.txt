@@ -1,0 +1,247 @@
+Job [7f000a106b2841cf8ecf3ef2bea866e2] submitted.
+Waiting for job output...
+18/07/02 10:57:48 INFO org.spark_project.jetty.util.log: Logging initialized @2315ms
+18/07/02 10:57:48 INFO org.spark_project.jetty.server.Server: jetty-9.3.z-SNAPSHOT
+18/07/02 10:57:48 INFO org.spark_project.jetty.server.Server: Started @2403ms
+18/07/02 10:57:48 INFO org.spark_project.jetty.server.AbstractConnector: Started ServerConnector@51c6d884{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+18/07/02 10:57:49 INFO com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystemBase: GHFS version: 1.6.7-hadoop2
+18/07/02 10:57:50 INFO org.apache.hadoop.yarn.client.RMProxy: Connecting to ResourceManager at spark-cluster-afe3-m/10.166.0.3:8032
+18/07/02 10:57:52 WARN org.apache.hadoop.hdfs.DataStreamer: Caught exception
+java.lang.InterruptedException
+        at java.lang.Object.wait(Native Method)
+        at java.lang.Thread.join(Thread.java:1252)
+        at java.lang.Thread.join(Thread.java:1326)
+        at org.apache.hadoop.hdfs.DataStreamer.closeResponder(DataStreamer.java:973)
+        at org.apache.hadoop.hdfs.DataStreamer.endBlock(DataStreamer.java:624)
+        at org.apache.hadoop.hdfs.DataStreamer.run(DataStreamer.java:801)
+18/07/02 10:57:52 INFO org.apache.hadoop.yarn.client.api.impl.YarnClientImpl: Submitted application application_1530230450182_0024
+18/07/02 10:57:57 INFO org.apache.hadoop.mapred.FileInputFormat: Total input files to process : 1
+18/07/02 10:58:48 INFO com.github.fommil.jni.JniLoader: successfully loaded /tmp/jniloader4101726227505489686netlib-native_system-linux-x86_64.so
+MLlib kmean WSSSE = 95745344.3023, time elapsed= 152.135462999                  
+
+18/07/02 11:00:29 INFO org.spark_project.jetty.server.AbstractConnector: Stopped Spark@51c6d884{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+Job [7f000a106b2841cf8ecf3ef2bea866e2] finished successfully.
+driverControlFilesUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/7f000a106b2841cf8ecf3ef2bea866e2/
+driverOutputResourceUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/7f000a106b2841cf8ecf3ef2bea866e2/driveroutput
+labels:
+  instance_num: '3'                                                                                                                                                                                  
+  iter_num: '0'                                                                                                                                                                                      
+  type: mllib                                                                                                                                                                                        
+placement:                                                                                                                                                                                           
+  clusterName: spark-cluster-afe3                                                                                                                                                                    
+  clusterUuid: 7e463636-cca3-40ce-baec-cc37e8dac18a                                                                                                                                                  
+pysparkJob:                                                                                                                                                                                          
+  loggingConfig: {}                                                                                                                                                                                  
+  mainPythonFileUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/7f000a106b2841cf8ecf3ef2bea866e2/staging/sparkmeans.py                                                                                                                                                                                     
+reference:                                                                                                                                                                                           
+  jobId: 7f000a106b2841cf8ecf3ef2bea866e2                                                                                                                                                            
+  projectId: my-project-1508938801394                                                                                                                                                                
+status:                                                                                                                                                                                              
+  state: DONE                                                                                                                                                                                        
+  stateStartTime: '2018-07-02T11:00:33.601Z'
+statusHistory:
+- state: PENDING
+  stateStartTime: '2018-07-02T10:57:44.614Z'
+- state: SETUP_DONE
+  stateStartTime: '2018-07-02T10:57:44.723Z'
+- details: Agent reported job success
+  state: RUNNING
+  stateStartTime: '2018-07-02T10:57:45.116Z'
+yarnApplications:
+- name: KMeansExample
+  progress: 1.0
+  state: FINISHED
+  trackingUrl: http://spark-cluster-afe3-m:8088/proxy/application_1530230450182_0024/
+Job [f06c638dfbd6484f99aff6412f84d530] submitted.
+Waiting for job output...
+18/07/02 11:00:41 INFO org.spark_project.jetty.util.log: Logging initialized @2392ms
+18/07/02 11:00:41 INFO org.spark_project.jetty.server.Server: jetty-9.3.z-SNAPSHOT
+18/07/02 11:00:41 INFO org.spark_project.jetty.server.Server: Started @2489ms
+18/07/02 11:00:41 INFO org.spark_project.jetty.server.AbstractConnector: Started ServerConnector@2abddd9e{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+18/07/02 11:00:42 INFO com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystemBase: GHFS version: 1.6.7-hadoop2
+18/07/02 11:00:43 INFO org.apache.hadoop.yarn.client.RMProxy: Connecting to ResourceManager at spark-cluster-afe3-m/10.166.0.3:8032
+18/07/02 11:00:45 WARN org.apache.hadoop.hdfs.DataStreamer: Caught exception
+java.lang.InterruptedException
+        at java.lang.Object.wait(Native Method)
+        at java.lang.Thread.join(Thread.java:1252)
+        at java.lang.Thread.join(Thread.java:1326)
+        at org.apache.hadoop.hdfs.DataStreamer.closeResponder(DataStreamer.java:973)
+        at org.apache.hadoop.hdfs.DataStreamer.endBlock(DataStreamer.java:624)
+        at org.apache.hadoop.hdfs.DataStreamer.run(DataStreamer.java:801)
+18/07/02 11:00:45 INFO org.apache.hadoop.yarn.client.api.impl.YarnClientImpl: Submitted application application_1530230450182_0025
+18/07/02 11:00:51 INFO org.apache.hadoop.mapred.FileInputFormat: Total input files to process : 1
+18/07/02 11:01:42 INFO com.github.fommil.jni.JniLoader: successfully loaded /tmp/jniloader7033861207787451950netlib-native_system-linux-x86_64.so
+MLlib kmean WSSSE = 94416820.4104, time elapsed= 153.327615023                  
+
+18/07/02 11:03:24 INFO org.spark_project.jetty.server.AbstractConnector: Stopped Spark@2abddd9e{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+Job [f06c638dfbd6484f99aff6412f84d530] finished successfully.
+driverControlFilesUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/f06c638dfbd6484f99aff6412f84d530/
+driverOutputResourceUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/f06c638dfbd6484f99aff6412f84d530/driveroutput
+labels:
+  instance_num: '3'
+  iter_num: '1'
+  type: mllib
+placement:
+  clusterName: spark-cluster-afe3
+  clusterUuid: 7e463636-cca3-40ce-baec-cc37e8dac18a
+pysparkJob:
+  loggingConfig: {}
+  mainPythonFileUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/f06c638dfbd6484f99aff6412f84d530/staging/sparkmeans.py
+reference:
+  jobId: f06c638dfbd6484f99aff6412f84d530
+  projectId: my-project-1508938801394
+status:
+  state: DONE
+  stateStartTime: '2018-07-02T11:03:28.667Z'
+statusHistory:
+- state: PENDING
+  stateStartTime: '2018-07-02T11:00:37.685Z'
+- state: SETUP_DONE
+  stateStartTime: '2018-07-02T11:00:37.764Z'
+- details: Agent reported job success
+  state: RUNNING
+  stateStartTime: '2018-07-02T11:00:38.118Z'
+yarnApplications:
+- name: KMeansExample
+  progress: 1.0
+  state: FINISHED
+  trackingUrl: http://spark-cluster-afe3-m:8088/proxy/application_1530230450182_0025/
+Job [0e56996ab4504308866983f62b609c76] submitted.
+Waiting for job output...
+18/07/02 11:03:37 INFO org.spark_project.jetty.util.log: Logging initialized @2314ms
+18/07/02 11:03:37 INFO org.spark_project.jetty.server.Server: jetty-9.3.z-SNAPSHOT
+18/07/02 11:03:37 INFO org.spark_project.jetty.server.Server: Started @2407ms
+18/07/02 11:03:37 INFO org.spark_project.jetty.server.AbstractConnector: Started ServerConnector@6df7b5cf{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+18/07/02 11:03:38 INFO com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystemBase: GHFS version: 1.6.7-hadoop2
+18/07/02 11:03:39 INFO org.apache.hadoop.yarn.client.RMProxy: Connecting to ResourceManager at spark-cluster-afe3-m/10.166.0.3:8032
+18/07/02 11:03:41 INFO org.apache.hadoop.yarn.client.api.impl.YarnClientImpl: Submitted application application_1530230450182_0026
+18/07/02 11:03:46 INFO org.apache.hadoop.mapred.FileInputFormat: Total input files to process : 1
+18/07/02 11:04:37 INFO com.github.fommil.jni.JniLoader: successfully loaded /tmp/jniloader4481380429359963488netlib-native_system-linux-x86_64.so
+MLlib kmean WSSSE = 94418661.7257, time elapsed= 151.417499065                  
+
+18/07/02 11:06:17 INFO org.spark_project.jetty.server.AbstractConnector: Stopped Spark@6df7b5cf{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+Job [0e56996ab4504308866983f62b609c76] finished successfully.
+driverControlFilesUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/0e56996ab4504308866983f62b609c76/
+driverOutputResourceUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/0e56996ab4504308866983f62b609c76/driveroutput
+labels:
+  instance_num: '3'
+  iter_num: '2'
+  type: mllib
+placement:
+  clusterName: spark-cluster-afe3
+  clusterUuid: 7e463636-cca3-40ce-baec-cc37e8dac18a
+pysparkJob:
+  loggingConfig: {}
+  mainPythonFileUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/0e56996ab4504308866983f62b609c76/staging/sparkmeans.py
+reference:
+  jobId: 0e56996ab4504308866983f62b609c76
+  projectId: my-project-1508938801394
+status:
+  state: DONE
+  stateStartTime: '2018-07-02T11:06:18.788Z'
+statusHistory:
+- state: PENDING
+  stateStartTime: '2018-07-02T11:03:34.234Z'
+- state: SETUP_DONE
+  stateStartTime: '2018-07-02T11:03:34.309Z'
+- details: Agent reported job success
+  state: RUNNING
+  stateStartTime: '2018-07-02T11:03:34.707Z'
+yarnApplications:
+- name: KMeansExample
+  progress: 1.0
+  state: FINISHED
+  trackingUrl: http://spark-cluster-afe3-m:8088/proxy/application_1530230450182_0026/
+Job [bfe11bad82b646efa1b3a77cdc9180fb] submitted.
+Waiting for job output...
+18/07/02 11:06:27 INFO org.spark_project.jetty.util.log: Logging initialized @2427ms
+18/07/02 11:06:27 INFO org.spark_project.jetty.server.Server: jetty-9.3.z-SNAPSHOT
+18/07/02 11:06:27 INFO org.spark_project.jetty.server.Server: Started @2517ms
+18/07/02 11:06:27 INFO org.spark_project.jetty.server.AbstractConnector: Started ServerConnector@42ae9da0{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+18/07/02 11:06:28 INFO com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystemBase: GHFS version: 1.6.7-hadoop2
+18/07/02 11:06:29 INFO org.apache.hadoop.yarn.client.RMProxy: Connecting to ResourceManager at spark-cluster-afe3-m/10.166.0.3:8032
+18/07/02 11:06:31 INFO org.apache.hadoop.yarn.client.api.impl.YarnClientImpl: Submitted application application_1530230450182_0027
+18/07/02 11:06:36 INFO org.apache.hadoop.mapred.FileInputFormat: Total input files to process : 1
+18/07/02 11:07:30 INFO com.github.fommil.jni.JniLoader: successfully loaded /tmp/jniloader6570587047585801811netlib-native_system-linux-x86_64.so
+MLlib kmean WSSSE = 95743662.6187, time elapsed= 153.780001879                  
+
+18/07/02 11:09:09 INFO org.spark_project.jetty.server.AbstractConnector: Stopped Spark@42ae9da0{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+Job [bfe11bad82b646efa1b3a77cdc9180fb] finished successfully.
+driverControlFilesUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/bfe11bad82b646efa1b3a77cdc9180fb/
+driverOutputResourceUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/bfe11bad82b646efa1b3a77cdc9180fb/driveroutput
+labels:
+  instance_num: '3'
+  iter_num: '3'
+  type: mllib
+placement:
+  clusterName: spark-cluster-afe3
+  clusterUuid: 7e463636-cca3-40ce-baec-cc37e8dac18a
+pysparkJob:
+  loggingConfig: {}
+  mainPythonFileUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/bfe11bad82b646efa1b3a77cdc9180fb/staging/sparkmeans.py
+reference:
+  jobId: bfe11bad82b646efa1b3a77cdc9180fb
+  projectId: my-project-1508938801394
+status:
+  state: DONE
+  stateStartTime: '2018-07-02T11:09:13.626Z'
+statusHistory:
+- state: PENDING
+  stateStartTime: '2018-07-02T11:06:23.964Z'
+- state: SETUP_DONE
+  stateStartTime: '2018-07-02T11:06:24.080Z'
+- details: Agent reported job success
+  state: RUNNING
+  stateStartTime: '2018-07-02T11:06:24.555Z'
+yarnApplications:
+- name: KMeansExample
+  progress: 1.0
+  state: FINISHED
+  trackingUrl: http://spark-cluster-afe3-m:8088/proxy/application_1530230450182_0027/
+Job [4cfa14cf17fc403abc7c486128761252] submitted.
+Waiting for job output...
+18/07/02 11:09:21 INFO org.spark_project.jetty.util.log: Logging initialized @2390ms
+18/07/02 11:09:21 INFO org.spark_project.jetty.server.Server: jetty-9.3.z-SNAPSHOT
+18/07/02 11:09:21 INFO org.spark_project.jetty.server.Server: Started @2490ms
+18/07/02 11:09:21 INFO org.spark_project.jetty.server.AbstractConnector: Started ServerConnector@2abddd9e{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+18/07/02 11:09:22 INFO com.google.cloud.hadoop.fs.gcs.GoogleHadoopFileSystemBase: GHFS version: 1.6.7-hadoop2
+18/07/02 11:09:23 INFO org.apache.hadoop.yarn.client.RMProxy: Connecting to ResourceManager at spark-cluster-afe3-m/10.166.0.3:8032
+18/07/02 11:09:25 INFO org.apache.hadoop.yarn.client.api.impl.YarnClientImpl: Submitted application application_1530230450182_0028
+18/07/02 11:09:30 INFO org.apache.hadoop.mapred.FileInputFormat: Total input files to process : 1
+18/07/02 11:10:21 INFO com.github.fommil.jni.JniLoader: successfully loaded /tmp/jniloader5365070788301159879netlib-native_system-linux-x86_64.so
+MLlib kmean WSSSE = 95743662.6187, time elapsed= 154.207078934                  
+
+18/07/02 11:12:04 INFO org.spark_project.jetty.server.AbstractConnector: Stopped Spark@2abddd9e{HTTP/1.1,[http/1.1]}{0.0.0.0:4040}
+Job [4cfa14cf17fc403abc7c486128761252] finished successfully.
+driverControlFilesUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/4cfa14cf17fc403abc7c486128761252/
+driverOutputResourceUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/4cfa14cf17fc403abc7c486128761252/driveroutput
+labels:
+  instance_num: '3'
+  iter_num: '4'
+  type: mllib
+placement:
+  clusterName: spark-cluster-afe3
+  clusterUuid: 7e463636-cca3-40ce-baec-cc37e8dac18a
+pysparkJob:
+  loggingConfig: {}
+  mainPythonFileUri: gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/google-cloud-dataproc-metainfo/7e463636-cca3-40ce-baec-cc37e8dac18a/jobs/4cfa14cf17fc403abc7c486128761252/staging/sparkmeans.py
+reference:
+  jobId: 4cfa14cf17fc403abc7c486128761252
+  projectId: my-project-1508938801394
+status:
+  state: DONE
+  stateStartTime: '2018-07-02T11:12:08.654Z'
+statusHistory:
+- state: PENDING
+  stateStartTime: '2018-07-02T11:09:17.565Z'
+- state: SETUP_DONE
+  stateStartTime: '2018-07-02T11:09:17.657Z'
+- details: Agent reported job success
+  state: RUNNING
+  stateStartTime: '2018-07-02T11:09:18.049Z'
+yarnApplications:
+- name: KMeansExample
+  progress: 1.0
+  state: FINISHED
+  trackingUrl: http://spark-cluster-afe3-m:8088/proxy/application_1530230450182_0028/
+

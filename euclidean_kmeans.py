@@ -78,10 +78,6 @@ if __name__ == "__main__":
             kPoints[iK] = p
 
     WSSSE = data.map(lambda point: compute_error(point, kPoints)).reduce(lambda x, y: x + y)
-    print("Euclidean WSSE = ", WSSSE)
     elapsed_time = time.time() - start_time
-    with open("euclidean.txt", "a") as euclidean:
-        euclidean.write(str(WSSSE))
-        euclidean.write(str(elapsed_time))
-    print("Final centers: " + str(kPoints))
+    print("Euclidean kmean WSSSE = {}, time elapsed= {}\n".format(str(WSSSE), str(elapsed_time)))
     spark.stop()

@@ -68,7 +68,7 @@ if __name__ == "__main__":
     while tempDist > convergeDist:
         closest = data.map(lambda p: (closestPoint(p, kPoints), (p, 1)))
         pointStats = closest.reduceByKey(lambda p1_c1, p2_c2:
-                                        (p1_c1[0] + p2_c2[0], p1_c1[1] + p2_c2[1]))
+                (p1_c1[0] + p2_c2[0], p1_c1[1] + p2_c2[1]))
         newPoints = pointStats.map(lambda st: (st[0], st[1][0] / st[1][1])).collect()
         tempDist = sum(np.sum((kPoints[iK] - p) ** 2) for (iK, p) in newPoints)
 
@@ -76,10 +76,6 @@ if __name__ == "__main__":
             kPoints[iK] = p
 
     WSSSE = data.map(lambda point: compute_error(point, kPoints)).reduce(lambda x, y: x + y)
-    print("Manhattan WSSSE = ", WSSSE)
     elapsed_time = time.time() - start_time
-    with open("euclidean.txt", "a") as euclidean:
-        euclidean.write(str(WSSSE))
-        euclidean.write(str(elapsed_time))
-    print("Final centers: " + str(kPoints))
+    print("Manhattan kmean WSSSE = {}, time elapsed= {}\n".format(str(WSSSE), str(elapsed_time)))
     spark.stop()

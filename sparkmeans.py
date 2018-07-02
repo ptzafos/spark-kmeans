@@ -32,36 +32,42 @@ from matplotlib import pyplot
 import time
 # $example off$
 
+def error(point, clusters):
+    center = clusters.centers[clusters.predict(point)]
+    return sqrt(sum([x**2 for x in (point - center)]))
+
 if __name__ == "__main__":
     sc = SparkContext(appName="KMeansExample")  # SparkContext
 
     # # $example on$
     # # Load and parse the data
-    sc.
     start_time = time.time()
     data = sc.textFile("pointdata2018.txt")
     parsedData = data.map(lambda line: array([float(x) for x in line.split(',')]))
 
     # # Build the model (cluster the data)
-    clusters = KMeans.train(parsedData, 4, maxIterations=10, initializationMode="random", seed=int(time.time()))
+    
+    minK = 0
+    minWSSE = float("+inf")
+    for K in range(2,10):
+        clusters = KMeans.train(parsedData, K, maxIterations=10, initializationMode="random", seed=int(time.time()))
+        WSSSE = parsedData.map(lambda point: error(point, clusters)).reduce(lambda x, y: x + y)
+        print("Kernel", K, "WSSSE=", WSSSE)
+        if(WSSSE<minWSSE):
+            minK=K
 
+    print("Optimal number of kernels:", minK)
 
+    clusters = KMeans.train(parsedData, minK, maxIterations=10, initializationMode="random", seed=int(time.time()))
     ## Evaluate clustering by computing Within Set Sum of Squared Errors
-    def error(point):
-        center = clusters.centers[clusters.predict(point)]
-        return sqrt(sum([x**2 for x in (point - center)]))
 
-    WSSSE = parsedData.map(lambda point: error(point)).reduce(lambda x, y: x + y)
-    print("MLlib = " + str(WSSSE))
+    WSSSE = parsedData.map(lambda point: error(point,clusters)).reduce(lambda x, y: x + y)
+    center = clusters.clusterCenters
+    print("Cluster centers:", center)
 
-# # Save and load model
+    # # Save and load model
     elapsed_time = time.time() - start_time
-    # with open("gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/mllib.txt", "a+") as mllib_file:
-    #     mllib_file.write("{}\n".format(str(WSSSE)))
-    #     mllib_file.write(str(elapsed_time))
-    # clusters.save(sc, "kmeans_mllib_model")
-    # sameModel = KMeansModel.load(sc, "KmeansResults")
-    # $example off$
+    print("MLlib kmean WSSSE = {}, time elapsed= {}\n".format(str(WSSSE), str(elapsed_time)))
     sc.stop()
 
     

@@ -17,35 +17,28 @@
 
 from __future__ import print_function
 
-# $example on$
 from numpy import array
 import numpy as np
 import sys
 from math import sqrt
 from datetime import datetime
-# $example off$
 
 from pyspark import SparkContext
-# $example on$
 from pyspark.mllib.clustering import KMeans, KMeansModel
 from matplotlib import pyplot
 import time
-# $example off$
 
 def error(point, clusters):
     center = clusters.centers[clusters.predict(point)]
     return sqrt(sum([x**2 for x in (point - center)]))
 
 if __name__ == "__main__":
-    sc = SparkContext(appName="KMeansExample")  # SparkContext
+    sc = SparkContext(appName="KMeansExample")  
 
-    # # $example on$
-    # # Load and parse the data
     start_time = time.time()
     data = sc.textFile("pointdata2018.txt")
     parsedData = data.map(lambda line: array([float(x) for x in line.split(',')]))
 
-    # # Build the model (cluster the data)
     
     minK = 0
     minWSSE = float("+inf")
@@ -59,13 +52,11 @@ if __name__ == "__main__":
     print("Optimal number of kernels:", minK)
 
     clusters = KMeans.train(parsedData, minK, maxIterations=10, initializationMode="random", seed=int(time.time()))
-    ## Evaluate clustering by computing Within Set Sum of Squared Errors
 
     WSSSE = parsedData.map(lambda point: error(point,clusters)).reduce(lambda x, y: x + y)
     center = clusters.clusterCenters
     print("Cluster centers:", center)
 
-    # # Save and load model
     elapsed_time = time.time() - start_time
     print("MLlib kmean WSSSE = {}, time elapsed= {}\n".format(str(WSSSE), str(elapsed_time)))
     sc.stop()

@@ -1,3 +1,14 @@
+#VALID - NEW RESULTS
+Kernel 2 WSSSE= 183583859.334                                                   
+Kernel 3 WSSSE= 140281345.899                                                   
+Kernel 4 WSSSE= 95740576.8825                                                   
+Kernel 5 WSSSE= 56961115.2938                                                   
+Kernel 6 WSSSE= 56706676.4791                                                   
+Kernel 7 WSSSE= 56478231.1822                                                   
+Kernel 8 WSSSE= 17743279.3228                                                   
+Kernel 9 WSSSE= 56233259.8872
+
+## OLD RESULTS
 2 - WSSE =  183583859.334                                                       
 3 - WSSE =  275633474.327                                                       
 4 - WSSE =  101642300.218                                                       

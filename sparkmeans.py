@@ -37,6 +37,7 @@ if __name__ == "__main__":
 
     # # $example on$
     # # Load and parse the data
+    sc.
     start_time = time.time()
     data = sc.textFile("pointdata2018.txt")
     parsedData = data.map(lambda line: array([float(x) for x in line.split(',')]))
@@ -55,9 +56,9 @@ if __name__ == "__main__":
 
 # # Save and load model
     elapsed_time = time.time() - start_time
-    with open("mllib.txt", "a") as mllib_file:
-        mllib_file.write(str(WSSSE))
-        mllib_file.write(str(elapsed_time))
+    # with open("gs://dataproc-99f4856f-2ef2-4239-ab93-7e952ddaa6a8-europe-north1/mllib.txt", "a+") as mllib_file:
+    #     mllib_file.write("{}\n".format(str(WSSSE)))
+    #     mllib_file.write(str(elapsed_time))
     # clusters.save(sc, "kmeans_mllib_model")
     # sameModel = KMeansModel.load(sc, "KmeansResults")
     # $example off$
